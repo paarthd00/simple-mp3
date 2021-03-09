@@ -4,11 +4,9 @@
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
 
 
-
-
-def get_input():
-    val = input("choose option:")
-    print("Choose option " + val)
+def validate_input(num):
+    if type({num}) == 'int':
+        print("")
 
 
 def display_menu():
@@ -17,13 +15,28 @@ def display_menu():
     1. Offline
     2. Online
     """
+
     print(f"" + menu_options)
 
 
-# Press the green button in the gutter to run the script.
+def get_input():
+    while 1:
+        display_menu()
+        val = input("choose option:")
+        try:
+            val = int(val)
+            if isinstance(val, int):
+                if val == 1:
+                    print("Choose option  1")
+                    break
+                elif val == 2:
+                    print("choose option 2")
+                    break
+        except ValueError:
+            print("value error, Choose correct option")
+
+
 if __name__ == '__main__':
-    display_menu()
     get_input()
-
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    g = input("different prompt:")
+    print(g)
