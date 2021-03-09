@@ -40,7 +40,7 @@ def get_input(menu):
         val = input("=>choose option:: ")
         try:
             val = int(val)
-            if 0 < val <= len(menu):
+            if 0 <= val < len(menu):
                 return val
         except ValueError:
             print("value error, Choose correct option")
@@ -104,7 +104,7 @@ def offline_collection_create(name: str):
 def offline_collection_open(collection_name):
     try:
         display_all_local_media("/" + collection_name)
-        song_int = get_input(["1.Play Song", "2.Delete Song", "3.Update Song"])
+        song_int = get_input(["0. Back", "1.Play Song", "2.Delete Song", "3.Update Song"])
         if song_int == 1:
             name_song = input("=>Enter the name of the song:: ")
             temp_song_str = str(path + "/musicplayer/media/" + collection_name + "/" + name_song)
@@ -142,9 +142,14 @@ def offline_collection_delete(collection_name):
 
 
 def offline_handler():
-    while 1:
+    valid = True
+    while valid:
         display_all_local_media("/")
-        collection_int = get_input(["1.Create new Collection", "2.Open Collection", "3.Delete Collection"])
+        collection_int = get_input(["0.Back","1.Create new Collection", "2.Open Collection", "3.Delete Collection"])
+        if collection_int == 0:
+            print("back")
+            valid = False
+            continue
         name = input("=>Enter the name of collection:: ")
         if collection_int == 1:
             print("create")
@@ -161,11 +166,17 @@ def offline_handler():
 
 
 if __name__ == '__main__':
-    display_app()
-    initial_menu_arr = ["1. Offline", "2. Online"]
-    type_int = get_input(initial_menu_arr)
-    if type_int == 1:
-        print(f"\nLooking up local\n-----------------")
-        offline_handler()
-    elif type_int == 2:
-        online_handler()
+    running = True
+    while running:
+        display_app()
+        initial_menu_arr = ["0. Exit", "1. Offline", "2. Online"]
+        type_int = get_input(initial_menu_arr)
+        if type_int == 0:
+            print("Exiting...")
+            running = False
+            continue
+        elif type_int == 1:
+            print(f"\nLooking up local\n-----------------")
+            offline_handler()
+        elif type_int == 2:
+            online_handler()
