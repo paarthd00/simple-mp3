@@ -3,9 +3,9 @@
 # main.py
 import os
 from playsound import playsound
-
+import youtube_dl
 path = os.getcwd()
-
+ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 
 def display_app():
     print(f"""----------------\n\n|MUSIC MANAGER|\n\n----------------""")
@@ -37,13 +37,38 @@ def display_menu(menu_array):
 def get_input(menu):
     while 1:
         display_menu(menu)
-        val = input("=>choose option:: ")
+        val = input("=> choose option, to perform action:: ")
         try:
             val = int(val)
             if 0 <= val < len(menu):
                 return val
         except ValueError:
             print("value error, Choose correct option")
+
+
+def local_music_handler(option: int, collection_name: str):
+    if option == 0:
+        print("back")
+        return
+    if option == 4:
+        temp = str(path + "/musicplayer/media/" + collection_name)
+        os.chdir(temp)
+        url = input("Enter the url of youtube video to add as mp3")
+        youtube_song = 'youtube-dl -x --embed-thumbnail --audio-format mp3 ' + url
+        os.system(youtube_song)
+        os.chdir(ROOT_DIR)
+        return
+    name_song = input("=> Enter the name of the song:: ")
+    temp_song_str = str(path + "/musicplayer/media/" + collection_name + "/" + name_song)
+    if option == 1:
+        playsound(temp_song_str)
+    elif option == 2:
+        os.remove(temp_song_str)
+        print(name_song + " deleted!")
+    elif option == 3:
+        new_song_name = input("enter updated name")
+        new_song_str = str(path + "/musicplayer/media/" + collection_name + "/" + new_song_name)
+        os.rename(temp_song_str, new_song_str)
 
 
 """
@@ -55,10 +80,6 @@ def get_input(menu):
 
 def online_handler():
     return "online handler"
-
-
-# Offline Handler
-# -----------------------------------------------------------------------------
 
 
 """
@@ -104,11 +125,8 @@ def offline_collection_create(name: str):
 def offline_collection_open(collection_name):
     try:
         display_all_local_media("/" + collection_name)
-        song_int = get_input(["0. Back", "1.Play Song", "2.Delete Song", "3.Update Song"])
-        if song_int == 1:
-            name_song = input("=>Enter the name of the song:: ")
-            temp_song_str = str(path + "/musicplayer/media/" + collection_name + "/" + name_song)
-            playsound(temp_song_str)
+        song_int = get_input(["0. Back", "1.Play Song", "2.Delete Song", "3.Update Song", "4.mp3 from youtube"])
+        local_music_handler(song_int, collection_name)
     except OSError:
         print("can open %s failed" % collection_name)
     else:
@@ -145,7 +163,7 @@ def offline_handler():
     valid = True
     while valid:
         display_all_local_media("/")
-        collection_int = get_input(["0.Back","1.Create new Collection", "2.Open Collection", "3.Delete Collection"])
+        collection_int = get_input(["0.Back", "1.Create new Collection", "2.Open Collection", "3.Delete Collection"])
         if collection_int == 0:
             print("back")
             valid = False
@@ -162,9 +180,6 @@ def offline_handler():
             print("delete")
 
 
-# ------------------------------------------------
-
-
 if __name__ == '__main__':
     running = True
     while running:
@@ -176,7 +191,7 @@ if __name__ == '__main__':
             running = False
             continue
         elif type_int == 1:
-            print(f"\nLooking up local\n-----------------")
+            print(f"\nLooking up local Collections\n------------------------")
             offline_handler()
         elif type_int == 2:
             online_handler()
