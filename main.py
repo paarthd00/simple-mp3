@@ -6,6 +6,11 @@ from playsound import playsound
 
 path = os.getcwd()
 
+
+def display_app():
+    print(f"""----------------\n\n|MUSIC MANAGER|\n\n----------------""")
+
+
 """
 # -----------------------------------------------------------------------------
 # display_menu, takes an array and format menu 
@@ -49,7 +54,7 @@ def get_input(menu):
 
 
 def online_handler():
-    print("online handler")
+    return "online handler"
 
 
 # Offline Handler
@@ -66,7 +71,7 @@ def online_handler():
 def display_all_local_media(dir_name: str):
     arr = os.listdir(str('./musicplayer/media' + dir_name))
     for i in range(len(arr)):
-        print("Item {} : {}".format(i+1, arr[i]))
+        print("*Item {} : {}".format(i+1, arr[i]))
     print("\n")
 
 
@@ -121,11 +126,11 @@ def offline_collection_open(collection_name):
 def offline_collection_delete(collection_name):
     try:
         temp = path + "/musicplayer/media/" + collection_name
-        os.mkdir(temp)
+        os.rmdir(temp)
     except OSError:
-        print("Creation of the directory %s failed" % path)
+        print("Delete directory %s failed" % path)
     else:
-        print("Successfully created the directory %s " % path)
+        print("Successfully deleted the directory %s " % path)
 
 
 """
@@ -156,9 +161,11 @@ def offline_handler():
 
 
 if __name__ == '__main__':
+    display_app()
     initial_menu_arr = ["1. Offline", "2. Online"]
     type_int = get_input(initial_menu_arr)
     if type_int == 1:
+        print(f"\nLooking up local\n-----------------")
         offline_handler()
     elif type_int == 2:
         online_handler()
