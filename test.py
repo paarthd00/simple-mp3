@@ -19,6 +19,10 @@ class OfflineTestMethods(unittest.TestCase):
         temp = current_path + "/musicplayer/media/" + collection_name
         self.assertEqual(path.exists(temp), False)
 
+    def update_collection_name(self):
+        collection_name = "test_collection"
+
+        offline_collection_open()
 
 class OnlineTestMethods(unittest.TestCase):
 

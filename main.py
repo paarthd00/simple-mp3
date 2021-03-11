@@ -2,7 +2,9 @@
 # @author Paarth
 # main.py
 import os
+import numpy
 from playsound import playsound
+
 path = os.getcwd()
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -40,8 +42,13 @@ def get_input(menu):
         val = input("=> choose option, to perform action:: ")
         try:
             val = int(val)
+            assert isinstance(val, int)
             if 0 <= val < len(menu):
                 return val
+            elif val >= len(menu):
+                print("Value too big")
+            elif val < 0:
+                print("Negative value")
         except ValueError:
             print("value error, Choose correct option")
 
@@ -60,15 +67,18 @@ def local_music_handler(option: int, collection_name: str):
         return
     name_song = input("=> Enter the name of the song:: ")
     temp_song_str = str(path + "/musicplayer/media/" + collection_name + "/" + name_song)
-    if option == 1:
-        playsound(temp_song_str)
-    elif option == 2:
-        os.remove(temp_song_str)
-        print(name_song + " deleted!")
-    elif option == 3:
-        new_song_name = input("enter updated name")
-        new_song_str = str(path + "/musicplayer/media/" + collection_name + "/" + new_song_name)
-        os.rename(temp_song_str, new_song_str)
+    if name_song in os.listdir(str(path + "/musicplayer/media/" + collection_name )):
+        if option == 1:
+            playsound(temp_song_str)
+        elif option == 2:
+            os.remove(temp_song_str)
+            print(name_song + " deleted!")
+        elif option == 3:
+            new_song_name = input("enter updated name")
+            new_song_str = str(path + "/musicplayer/media/" + collection_name + "/" + new_song_name)
+            os.rename(temp_song_str, new_song_str)
+    else:
+        print("Opps Please check the song name")
 
 
 """
@@ -92,7 +102,7 @@ def online_handler():
 def display_all_local_media(dir_name: str):
     arr = os.listdir(str('./musicplayer/media' + dir_name))
     for i in range(len(arr)):
-        print("*Item {} : {}".format(i+1, arr[i]))
+        print("*Item {} : {}".format(i + 1, arr[i]))
     print("\n")
 
 
@@ -163,21 +173,30 @@ def offline_handler():
     valid = True
     while valid:
         display_all_local_media("/")
+
+        print("OPTIONS")
+        print("-----------")
         collection_int = get_input(["0.Back", "1.Create new Collection", "2.Open Collection", "3.Delete Collection"])
+
         if collection_int == 0:
             print("back")
             valid = False
             continue
         name = input("=>Enter the name of collection:: ")
-        if collection_int == 1:
-            print("create")
-            offline_collection_create(name)
-        elif collection_int == 2:
-            offline_collection_open(name)
-            print("open")
-        elif collection_int == 3:
-            offline_collection_delete(name)
-            print("delete")
+        temp_arr = os.listdir(str('./musicplayer/media/'))
+
+        if name in temp_arr:
+            if collection_int == 1:
+                print("create")
+                offline_collection_create(name)
+            elif collection_int == 2:
+                offline_collection_open(name)
+                print("open")
+            elif collection_int == 3:
+                offline_collection_delete(name)
+                print("delete")
+        else:
+            print("Collection does not exist")
 
 
 if __name__ == '__main__':
