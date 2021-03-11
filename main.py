@@ -3,9 +3,9 @@
 # main.py
 import os
 from playsound import playsound
-import youtube_dl
 path = os.getcwd()
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
+
 
 def display_app():
     print(f"""----------------\n\n|MUSIC MANAGER|\n\n----------------""")

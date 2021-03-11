@@ -38,4 +38,5 @@ class OnlineTestMethods(unittest.TestCase):
         self.assertEqual(path.exists(temp), False)
 
 
-unittest.main()
+if __name__ == "__main__":
+    unittest.main()
