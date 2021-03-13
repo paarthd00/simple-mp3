@@ -14,9 +14,7 @@ def display_app():
 
 
 """
-# -----------------------------------------------------------------------------
 # display_menu, takes an array and format menu 
-# -----------------------------------------------------------------------------
 """
 
 
@@ -29,10 +27,8 @@ def display_menu(menu_array):
 
 
 """
-# -----------------------------------------------------------------------------
 # gets input from menu option and returns the selected option
 # @return type int 
-# -----------------------------------------------------------------------------
 """
 
 
@@ -82,20 +78,23 @@ def local_music_handler(option: int, collection_name: str):
 
 
 """
-# -----------------------------------------------------------------------------
 # Online media player handler, connects to the Db and shows all the collections
-# -----------------------------------------------------------------------------
 """
+#
 
 
 def online_handler():
-    return "online handler"
+    print("Online Handler")
+    pass
+
+
+# Show all the collections in the Db
+# Give options to handle Request
+# Take request and perform task
 
 
 """
-# -----------------------------------------------------------------------------
-# displays the directory dir_name 
-# -----------------------------------------------------------------------------
+# displays the directory dir_name
 """
 
 
@@ -107,10 +106,8 @@ def display_all_local_media(dir_name: str):
 
 
 """
-# -----------------------------------------------------------------------------
 # offline_collection_create
 # name param passed and creates a new collection 
-# -----------------------------------------------------------------------------
 """
 
 
@@ -125,10 +122,8 @@ def offline_collection_create(name: str):
 
 
 """
-# -----------------------------------------------------------------------------
 # offline_collection_open
 # show all the songs in a collection
-# -----------------------------------------------------------------------------
 """
 
 
@@ -144,10 +139,8 @@ def offline_collection_open(collection_name):
 
 
 """
-# -----------------------------------------------------------------------------
 # offline_collection_delete
 # Deletes the selected collection
-# -----------------------------------------------------------------------------
 """
 
 
@@ -162,10 +155,8 @@ def offline_collection_delete(collection_name):
 
 
 """
-# -----------------------------------------------------------------------------
 # offline_handler
 # handles all the requests on local system
-# -----------------------------------------------------------------------------
 """
 
 
