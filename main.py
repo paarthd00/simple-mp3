@@ -5,6 +5,9 @@ import os
 import numpy
 from playsound import playsound
 
+from musicplayer.connection_db import *
+
+
 path = os.getcwd()
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -84,6 +87,16 @@ def local_music_handler(option: int, collection_name: str):
 
 
 def online_handler():
+    show_music(conn,"collections")
+    # show_music(conn,"music_player")
+    print("OPTIONS")
+    print("-----------")
+    collection_int = get_input(["0.Back", "1.Create new Collection", "2.Open Collection", "3.Delete Collection"])
+    if collection_int == 1:
+        collection_name = input("enter name of collection")
+
+        # insert_collection(conn,collection)
+    print(collection_int)
     print("Online Handler")
     pass
 

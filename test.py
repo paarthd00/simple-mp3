@@ -21,8 +21,9 @@ class OfflineTestMethods(unittest.TestCase):
 
     def update_collection_name(self):
         collection_name = "test_collection"
+        off
 
-        offline_collection_open()
+
 
 class OnlineTestMethods(unittest.TestCase):
 
