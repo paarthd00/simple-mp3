@@ -37,6 +37,15 @@ def show_music(conn, table_name, group_id):
     return data
 
 
+def show_collections(conn, table_name):
+    cur.execute("SELECT * from " + table_name)
+    data = cur.fetchall()
+    conn.commit()
+    for el in data:
+        print(el)
+    return data
+
+
 def get_url(conn, name):
     cur.execute("SELECT url from songs WHERE name=?", (name,))
     data = cur.fetchall()
@@ -62,13 +71,19 @@ def create_tables(conn):
 def main():
     create_tables(conn)
 
-    music = (1,today,'Summertime2','Mac',"https://www.youtube.com/watch?v=qL7zrWcv6XY")
-    collections = (today, 'Mac')
-    insert_collection(conn, collections)
-    insert_song(conn, music)
-    show_music(conn, "songs", 1)
+    music_list = [(1,today,'FireSquad','rap',"https://www.youtube.com/watch?v=HCURqfqL8sI"),
+                  (1, today, 'Skegee', 'rap', "https://www.youtube.com/watch?v=z6RlzkWY2o4"),
+                  (1, today, 'GangSigns', 'rap', "https://www.youtube.com/watch?v=_WnXMMOkubA"),
+                  (2, today, 'letitbreathe', 'lofi', "https://www.youtube.com/watch?v=0WGPP_3BPPQ"),
+                  (2, today, 'trustnobody', 'lofi', "https://www.youtube.com/watch?v=XuSFWY_7e54")]
+    collections = [(today, 'rap'),(today,'lofi')]
+    for c in collections:
+        insert_collection(conn, c)
+    for el in music_list:
+        insert_song(conn, el)
+    # show_music(conn, "songs", 1)
 
-    show_music(conn, "collections")
+    show_collections(conn, "collections")
 
     conn.close()
 
