@@ -28,12 +28,21 @@ def insert_collection(conn, collection):
     return cur.lastrowid
 
 
-def show_music(conn, table_name):
-    sql = " SELECT * from " + table_name
-    data = cur.execute(sql)
+def show_music(conn, table_name, group_id):
+    cur.execute(" SELECT * from " + table_name + " WHERE group_id=?",str(group_id))
+    data = cur.fetchall()
     conn.commit()
     for el in data:
         print(el)
+    return data
+
+
+def get_url(conn, name):
+    cur.execute("SELECT url from songs WHERE name=?", (name,))
+    data = cur.fetchall()
+    # conn.commit()
+    # for el in data:
+    #     print(el)
     return data
 
 
@@ -57,7 +66,7 @@ def main():
     collections = (today, 'Mac')
     insert_collection(conn, collections)
     insert_song(conn, music)
-    show_music(conn, "songs")
+    show_music(conn, "songs", 1)
 
     show_music(conn, "collections")
 

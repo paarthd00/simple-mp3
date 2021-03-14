@@ -87,14 +87,18 @@ def local_music_handler(option: int, collection_name: str):
 
 
 def online_handler():
-    show_music(conn,"collections")
-    # show_music(conn,"music_player")
+    show_music(conn,"collections",1)
     print("OPTIONS")
     print("-----------")
     collection_int = get_input(["0.Back", "1.Create new Collection", "2.Open Collection", "3.Delete Collection"])
-    if collection_int == 1:
-        collection_name = input("enter name of collection")
-
+    if collection_int == 2:
+        group_id = input("enter group_id")
+        show_music(conn,"songs",group_id)
+        name_song = input("enter the name of the song")
+        temp_url = get_url(conn,name_song)
+        new_url = ''.join(temp_url[0])
+        # print(new_url)
+        os.system(f"mpv " + new_url)
         # insert_collection(conn,collection)
     print(collection_int)
     print("Online Handler")
