@@ -8,14 +8,21 @@ conn = sqlite3.connect('./Db/app.db')
 cur = conn.cursor()
 
 
-def delete_collection(conn, _id):
+def delete_song(song_name):
+    sql = '''DELETE FROM songs WHERE name=?'''
+    cur.execute(sql,(song_name,))
+    conn.commit()
+    return 1
+
+
+def delete_collection(_id):
     sql = '''DELETE FROM collections WHERE group_id=?'''
     cur.execute(sql,(_id,))
     conn.commit()
     return 1
 
 
-def insert_song(conn, music):
+def insert_song(music):
     sql = ''' INSERT INTO songs(group_id,date,name,artist,url)
               VALUES(?,?,?,?,?) '''
 
@@ -25,7 +32,15 @@ def insert_song(conn, music):
     return cur.lastrowid
 
 
-def insert_collection(conn, collection):
+def get_collection_name(_id):
+    sql = '''SELECT name FROM collections WHERE group_id=?'''
+    cur.execute(sql,(_id,))
+    name = cur.fetchone()
+    name = ''.join(name[0])
+    return name
+
+
+def insert_collection(collection):
     sql = ''' INSERT INTO collections(date,name)
               VALUES(?,?) '''
 
@@ -35,7 +50,7 @@ def insert_collection(conn, collection):
     return cur.lastrowid
 
 
-def show_music(conn, table_name, group_id):
+def show_music(table_name, group_id):
     cur.execute(" SELECT * from " + table_name + " WHERE group_id=?",str(group_id))
     data = cur.fetchall()
     conn.commit()
@@ -44,16 +59,15 @@ def show_music(conn, table_name, group_id):
     return data
 
 
-def show_collections(conn, table_name):
+def show_collections(table_name):
     cur.execute("SELECT * from " + table_name)
     data = cur.fetchall()
-    conn.commit()
     for el in data:
         print(el)
     return data
 
 
-def get_url(conn, name):
+def get_url(name):
     cur.execute("SELECT url from songs WHERE name=?", (name,))
     data = cur.fetchall()
     # conn.commit()
@@ -62,9 +76,9 @@ def get_url(conn, name):
     return data
 
 
-def create_tables(conn):
-    sql = ['''CREATE TABLE if not exists songs (group_id INTEGER NOT NULL, date text, name text NOT NULL PRIMARY KEY, artist text, 
-                            url text, FOREIGN KEY (group_id) REFERENCES supplier_groups (group_id))''',
+def create_tables():
+    sql = ['''CREATE TABLE if not exists songs (group_id INTEGER NOT NULL, date text, name text NOT NULL PRIMARY KEY,
+     artist text, url text, FOREIGN KEY (group_id) REFERENCES supplier_groups (group_id))''',
            '''CREATE TABLE if not exists collections
                            ( group_id INTEGER PRIMARY KEY AUTOINCREMENT, date text, name text)'''
            ]
@@ -76,7 +90,7 @@ def create_tables(conn):
 
 
 def main():
-    create_tables(conn)
+    create_tables()
 
     music_list = [(1,today,'FireSquad','rap',"https://www.youtube.com/watch?v=HCURqfqL8sI"),
                   (1, today, 'Skegee', 'rap', "https://www.youtube.com/watch?v=z6RlzkWY2o4"),
@@ -85,12 +99,12 @@ def main():
                   (2, today, 'trustnobody', 'lofi', "https://www.youtube.com/watch?v=XuSFWY_7e54")]
     collections = [(today, 'rap'),(today,'lofi')]
     for c in collections:
-        insert_collection(conn, c)
+        insert_collection(c)
     for el in music_list:
-        insert_song(conn, el)
+        insert_song(el)
     # show_music(conn, "songs", 1)
 
-    show_collections(conn, "collections")
+    show_collections("collections")
 
     conn.close()
 

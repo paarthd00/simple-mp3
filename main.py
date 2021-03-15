@@ -51,46 +51,62 @@ def get_input(menu):
             print("value error, Choose correct option")
 
 
-"""
-# Online media player handler, connects to the Db and shows all the collections
-"""
-#
+def online_song_handler(option: int, _id: int):
+    if option == 0:
+        print("back")
+    else:
+        song_name = input("Enter the name of the song")
+        if option == 1:
+            temp_url = get_url(song_name)
+            new_url = ''.join(temp_url[0])
+            os.system(f"mpv " + new_url)
+        elif option == 2:
+            url = input("please enter the url")
+            collect_name = get_collection_name(_id)
+            music_el = (_id,today,song_name,str(collect_name),url)
+            insert_song(music_el)
+            print("Insert")
+        elif option == 3:
+            delete_song(song_name)
+            print("Delete")
 
 
-def online_handler():
-    show_collections(conn,"collections")
-    print("OPTIONS")
-    print("-----------")
-    collection_int = get_input(["0.Back", "1.Create new Collection", "2.Open Collection", "3.Delete Collection"])
-    if collection_int == 0:
+def online_collection_handler(option: int):
+    if option == 0:
         print("back")
         # valid = False
         # continue;
-    elif collection_int == 1:
+    elif option == 1:
         collection_name = input("Please enter name for the new collection")
-        insert_collection(conn,(today,str(collection_name)))
-    elif collection_int == 2:
-        sql = ''' INSERT INTO tasks(name,priority,status_id,project_id,begin_date,end_date)
-                     VALUES(?,?,?,?,?,?) '''
+        insert_collection((today,str(collection_name)))
+    # open a collection
+    elif option == 2:
         group_id = input("enter group_id")
-        show_music(conn,"songs",group_id)
+        show_music("songs",group_id)
         # print the menu with options for the songs
-        song_int = get_input(["0. Back", "1.Play Song", "2.Delete Song", "3.Update Song", "4.mp3 from youtube"])
-        if song_int == 1:
-            name_song = input("Enter the name of the song to play")
-            temp_url = get_url(conn,name_song)
-            new_url = ''.join(temp_url[0])
-            os.system(f"mpv " + new_url)
-
+        song_int = get_input(["0. Back", "1.Play Song", "2.Insert Song", "3.Delete Song"])
+        online_song_handler(song_int,group_id)
         # insert_collection(conn,collection)
-    elif collection_int == 3:
+    # delete a collection
+    elif option == 3:
         _id = input("Please enter group_id ")
-        delete_collection(conn,_id)
-        # Delete collection
-        print(collection_int)
+        delete_collection(_id)
     print("Online Handler")
     pass
 
+
+"""
+# Online media player handler, connects to the Db and shows all the collections
+"""
+
+
+def online_handler():
+    print(f"group_id|date|collection_name")
+    show_collections("collections")
+    print("OPTIONS")
+    print("-----------")
+    collection_int = get_input(["0.Back", "1.Create new Collection", "2.Open Collection", "3.Delete Collection"])
+    online_collection_handler(collection_int)
 
 # Show all the collections in the Db
 # Give options to handle Request
