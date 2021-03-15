@@ -9,4 +9,5 @@ ScreenShot
 </h5>
 
 <img alt="App preview" src="https://github.com/paarthd00/simple-mp3/blob/master/music_manger.png"></img>
+<br>
 Built in Python with :green_heart: 
