@@ -32,14 +32,6 @@ def insert_song(music):
     return cur.lastrowid
 
 
-def get_collection_name(_id):
-    sql = '''SELECT name FROM collections WHERE group_id=?'''
-    cur.execute(sql,(_id,))
-    name = cur.fetchone()
-    name = ''.join(name[0])
-    return name
-
-
 def insert_collection(collection):
     sql = ''' INSERT INTO collections(date,name)
               VALUES(?,?) '''
@@ -65,6 +57,14 @@ def show_collections(table_name):
     for el in data:
         print(el)
     return data
+
+
+def get_collection_name(_id):
+    sql = '''SELECT name FROM collections WHERE group_id=?'''
+    cur.execute(sql,(_id,))
+    name = cur.fetchone()
+    name = ''.join(name[0])
+    return name
 
 
 def get_url(name):
