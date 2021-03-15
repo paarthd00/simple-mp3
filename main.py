@@ -63,7 +63,7 @@ def online_song_handler(option: int, _id: int):
         elif option == 2:
             url = input("please enter the url")
             collect_name = get_collection_name(_id)
-            music_el = (_id,today,song_name,str(collect_name),url)
+            music_el = (_id, today, song_name, str(collect_name), url)
             insert_song(music_el)
             print("Insert")
         elif option == 3:
@@ -78,14 +78,14 @@ def online_collection_handler(option: int):
         # continue;
     elif option == 1:
         collection_name = input("Please enter name for the new collection")
-        insert_collection((today,str(collection_name)))
+        insert_collection((today, str(collection_name)))
     # open a collection
     elif option == 2:
-        group_id = input("enter group_id")
-        show_music("songs",group_id)
+        group_id = int(input("enter group_id"))
+        show_music("songs", group_id)
         # print the menu with options for the songs
         song_int = get_input(["0. Back", "1.Play Song", "2.Insert Song", "3.Delete Song"])
-        online_song_handler(song_int,group_id)
+        online_song_handler(song_int, group_id)
         # insert_collection(conn,collection)
     # delete a collection
     elif option == 3:
@@ -127,7 +127,7 @@ def local_music_handler(option: int, collection_name: str):
         return
     name_song = input("=> Enter the name of the song:: ")
     temp_song_str = str(path + "/musicplayer/media/" + collection_name + "/" + name_song)
-    if name_song in os.listdir(str(path + "/musicplayer/media/" + collection_name )):
+    if name_song in os.listdir(str(path + "/musicplayer/media/" + collection_name)):
         if option == 1:
             playsound(temp_song_str)
         elif option == 2:
@@ -234,10 +234,6 @@ def offline_handler():
             elif collection_int == 3:
                 offline_collection_delete(name)
                 print("deleted")
-            elif collection_int == 4:
-                # insert()
-                offline_collection_open()
-                print("Inserted")
         else:
             print("Collection does not exist")
 
