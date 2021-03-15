@@ -8,6 +8,13 @@ conn = sqlite3.connect('./Db/app.db')
 cur = conn.cursor()
 
 
+def delete_collection(conn, _id):
+    sql = '''DELETE FROM collections WHERE group_id=?'''
+    cur.execute(sql,(_id,))
+    conn.commit()
+    return 1
+
+
 def insert_song(conn, music):
     sql = ''' INSERT INTO songs(group_id,date,name,artist,url)
               VALUES(?,?,?,?,?) '''
