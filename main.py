@@ -3,11 +3,10 @@
 __author__ = "Paarth"
 __email__ = "paarthcode@gmail.com"
 import os
-import sys
+
 from playsound import playsound
 
 from musicplayer.connection_db import *
-
 
 path = os.getcwd()
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
