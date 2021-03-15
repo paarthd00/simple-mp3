@@ -19,16 +19,11 @@ class OfflineTestMethods(unittest.TestCase):
         temp = current_path + "/musicplayer/media/" + collection_name
         self.assertEqual(path.exists(temp), False)
 
-    def update_collection_name(self):
-        collection_name = "test_collection"
-        off
-
-
 
 class OnlineTestMethods(unittest.TestCase):
-
-    def test_online_handler(self):
-        self.assertEqual(online_handler(), 'online handler')
+    #
+    # def test_online_handler(self):
+    #     self.assertEqual(online_handler(), 'online handler')
 
     def test_collection_create(self):
         collection_name = "test_collection"
