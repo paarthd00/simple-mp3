@@ -1,6 +1,7 @@
 # This is a playlist manager
-# @author Paarth
 # main.py
+__author__ = "Paarth"
+__email__ = "paarthcode@gmail.com"
 import os
 import sys
 from playsound import playsound
