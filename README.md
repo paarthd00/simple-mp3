@@ -4,5 +4,5 @@ This is music player that manages records online and offline.
 <li>Can store and download mp3 from youtube url</li> 
 <li>Songs are played on a different thread</li>
 <ul/>
-
+![Screenshot](music_manager.png)
 Built in Python with :green_heart: 
