@@ -76,8 +76,8 @@ def insert_song(song_name, _id: int):
         music_el = (_id, today, song_name, str(collect_name), url)
         insert_song(music_el)
         print("Inserted")
-    except Exception as e:
-        print("Error: %s" % e)
+    except Exception as err:
+        print("Error: %s" % err)
 
 
 def online_song_handler(option: int, _id: int):
@@ -99,8 +99,8 @@ def online_song_handler(option: int, _id: int):
             elif option == 3:
                 delete_song(song_name)
                 print("Deleted" + song_name)
-    except Exception as e:
-        print("Error: %s" % e)
+    except Exception as err:
+        print("Error: %s" % err)
 
 
 def online_collection_handler(option: int):
@@ -127,8 +127,8 @@ def online_collection_handler(option: int):
             delete_collection(_id)
         print("Online Handler")
         pass
-    except Exception as e:
-        print("Error: %s" % e)
+    except Exception as err:
+        print("Error: %s" % err)
 
 
 def online_handler():
@@ -143,8 +143,8 @@ def online_handler():
         print("-----------")
         collection_int = get_input(["0.Back", "1.Create new Collection", "2.Open Collection", "3.Delete Collection"])
         online_collection_handler(collection_int)
-    except Exception as e:
-        print("Error: %s" % e)
+    except Exception as err:
+        print("Error: %s" % err)
 
 
 def get_song_youtube(collection_name):
@@ -160,8 +160,8 @@ def get_song_youtube(collection_name):
         youtube_song = 'youtube-dl -x --embed-thumbnail --audio-format mp3 ' + url
         os.system(youtube_song)
         os.chdir(ROOT_DIR)
-    except Exception as e:
-        print("Error: %s" % e)
+    except Exception as err:
+        print("Error: %s" % err)
 
 
 def local_music_handler(option: int, collection_name: str):
@@ -192,8 +192,8 @@ def local_music_handler(option: int, collection_name: str):
                 os.rename(temp_song_str, new_song_str)
         else:
             print("Opps Please check the song name")
-    except Exception as e:
-        print("Error: %s" % e)
+    except Exception as err:
+        print("Error: %s" % err)
 
 
 def display_all_local_media(dir_name: str):
@@ -278,8 +278,8 @@ def offline_collection_handler(name: str, *temp_arr, collection_int: int):
                 print("deleted")
         else:
             print("Collection does not exist")
-    except Exception as e:
-        print("Error: %s" % e)
+    except Exception as err:
+        print("Error: %s" % err)
 
 
 def offline_handler():
@@ -295,7 +295,8 @@ def offline_handler():
 
             print("OPTIONS")
             print("-----------")
-            collection_int = get_input(["0.Back", "1.Create new Collection", "2.Open Collection", "3.Delete Collection"])
+            collection_int = get_input(["0.Back", "1.Create new Collection",
+                                        "2.Open Collection", "3.Delete Collection"])
 
             if collection_int == 0:
                 print("back")
@@ -303,9 +304,10 @@ def offline_handler():
                 continue
             name = input("=>Enter the name of collection:: ")
             temp_arr = os.listdir(str('./musicplayer/media/'))
-            offline_collection_handler(name, temp_arr, collection_int)
-    except Exception as e:
-        print("Error: %s" % e)
+            if collection_int:
+                offline_collection_handler(name, temp_arr, collection_int)
+    except Exception as err:
+        print("Error: %s" % err)
 
 
 if __name__ == '__main__':
@@ -326,4 +328,3 @@ if __name__ == '__main__':
                 online_handler()
     except Exception as e:
         print("Error: %s" % e)
-
