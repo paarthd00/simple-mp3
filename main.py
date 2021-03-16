@@ -63,7 +63,7 @@ def play_video(song_name):
         print("song name doesn't exist")
 
 
-def insert_song(song_name, _id: int):
+def insert_song_online(song_name, _id: int):
     """
     inserts a new song song_name to the DB
     :param song_name:
@@ -95,7 +95,7 @@ def online_song_handler(option: int, _id: int):
             if option == 1:
                 play_video(song_name)
             elif option == 2:
-                insert_song(song_name, _id)
+                insert_song_online(song_name, _id)
             elif option == 3:
                 delete_song(song_name)
                 print("Deleted" + song_name)

@@ -1,3 +1,7 @@
+# connection_db.py
+# To initialize the DB
+# Change connection conn Db path ../Db/app.db
+# and run this file
 import sqlite3
 from datetime import date
 
@@ -88,7 +92,6 @@ def create_tables():
 
 def main():
     create_tables()
-
     music_list = [(1, today, 'FireSquad', 'rap', "https://www.youtube.com/watch?v=HCURqfqL8sI"),
                   (1, today, 'Skegee', 'rap', "https://www.youtube.com/watch?v=z6RlzkWY2o4"),
                   (1, today, 'GangSigns', 'rap', "https://www.youtube.com/watch?v=_WnXMMOkubA"),
@@ -99,10 +102,7 @@ def main():
         insert_collection(c)
     for el in music_list:
         insert_song(el)
-    # show_music(conn, "songs", 1)
-
     show_collections("collections")
-
     conn.close()
 
 
@@ -114,4 +114,4 @@ if __name__ == '__main__':
 # options for the online collections
 # chooses options, and perform action from the local sql db
 # takes the user to online source
-#
+
