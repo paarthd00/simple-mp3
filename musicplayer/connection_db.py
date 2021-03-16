@@ -10,14 +10,14 @@ cur = conn.cursor()
 
 def delete_song(song_name):
     sql = '''DELETE FROM songs WHERE name=?'''
-    cur.execute(sql,(song_name,))
+    cur.execute(sql, (song_name,))
     conn.commit()
     return 1
 
 
 def delete_collection(_id):
     sql = '''DELETE FROM collections WHERE group_id=?'''
-    cur.execute(sql,(_id,))
+    cur.execute(sql, (_id,))
     conn.commit()
     return 1
 
@@ -43,7 +43,7 @@ def insert_collection(collection):
 
 
 def show_music(table_name, group_id):
-    cur.execute(" SELECT * from " + table_name + " WHERE group_id=?",str(group_id))
+    cur.execute(" SELECT * from " + table_name + " WHERE group_id=?", str(group_id))
     data = cur.fetchall()
     conn.commit()
     for el in data:
@@ -61,7 +61,7 @@ def show_collections(table_name):
 
 def get_collection_name(_id):
     sql = '''SELECT name FROM collections WHERE group_id=?'''
-    cur.execute(sql,(_id,))
+    cur.execute(sql, (_id,))
     name = cur.fetchone()
     name = ''.join(name[0])
     return name
@@ -70,9 +70,6 @@ def get_collection_name(_id):
 def get_url(name):
     cur.execute("SELECT url from songs WHERE name=?", (name,))
     data = cur.fetchall()
-    # conn.commit()
-    # for el in data:
-    #     print(el)
     return data
 
 
@@ -92,12 +89,12 @@ def create_tables():
 def main():
     create_tables()
 
-    music_list = [(1,today,'FireSquad','rap',"https://www.youtube.com/watch?v=HCURqfqL8sI"),
+    music_list = [(1, today, 'FireSquad', 'rap', "https://www.youtube.com/watch?v=HCURqfqL8sI"),
                   (1, today, 'Skegee', 'rap', "https://www.youtube.com/watch?v=z6RlzkWY2o4"),
                   (1, today, 'GangSigns', 'rap', "https://www.youtube.com/watch?v=_WnXMMOkubA"),
                   (2, today, 'letitbreathe', 'lofi', "https://www.youtube.com/watch?v=0WGPP_3BPPQ"),
                   (2, today, 'trustnobody', 'lofi', "https://www.youtube.com/watch?v=XuSFWY_7e54")]
-    collections = [(today, 'rap'),(today,'lofi')]
+    collections = [(today, 'rap'), (today, 'lofi')]
     for c in collections:
         insert_collection(c)
     for el in music_list:
