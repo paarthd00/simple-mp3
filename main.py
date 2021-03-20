@@ -120,7 +120,7 @@ def online_collection_handler(option: int):
             group_id = int(input(":: Enter group_id => "))
             show_music("songs", group_id)
             # print the menu with options for the songs
-            song_int = get_input(["0. Back", "1.Play Song", "2.Insert Song", "3.Delete Song"])
+            song_int = get_input(["0. Back", "1. Play Song", "2. Insert Song", "3. Delete Song"])
             online_song_handler(song_int, group_id)
         elif option == 3:
             _id = input(":: Please enter group_id => ")
@@ -141,7 +141,7 @@ def online_handler():
         show_collections("collections")
         print("OPTIONS")
         print("-----------")
-        collection_int = get_input(["0.Back", "1.Create new Collection", "2.Open Collection", "3.Delete Collection"])
+        collection_int = get_input(["0. Back", "1. Create new Collection", "2. Open Collection", "3. Delete Collection"])
         online_collection_handler(collection_int)
     except Exception as err:
         print("Error: %s" % err)
@@ -293,8 +293,8 @@ def offline_handler():
 
             print("OPTIONS")
             print("-----------")
-            collection_int = get_input(["0.Back", "1.Create new Collection",
-                                        "2.Open Collection", "3.Delete Collection"])
+            collection_int = get_input(["0. Back", "1. Create new Collection",
+                                        "2. Open Collection", "3. Delete Collection"])
 
             if collection_int == 0:
                 print("back")

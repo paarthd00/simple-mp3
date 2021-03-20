@@ -47,11 +47,11 @@ def insert_collection(collection):
 
 
 def show_music(table_name, group_id):
-    cur.execute(" SELECT * from " + table_name + " WHERE group_id=?", str(group_id))
+    cur.execute(" SELECT name from " + table_name + " WHERE group_id=?", str(group_id))
     data = cur.fetchall()
     conn.commit()
     for el in data:
-        print(el)
+        print(''.join(el))
     return data
 
 
