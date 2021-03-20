@@ -35,7 +35,7 @@ def get_input(menu):
     """
     while 1:
         display_menu(menu)
-        val = input("=> choose option, to perform action:: ")
+        val = input(":: choose option, to perform action => ")
         try:
             val = int(val)
             assert isinstance(val, int)
@@ -91,7 +91,7 @@ def online_song_handler(option: int, _id: int):
         if option == 0:
             print("back")
         else:
-            song_name = input("Enter the name of the song")
+            song_name = input(":: Enter the name of the song => ")
             if option == 1:
                 play_video(song_name)
             elif option == 2:
@@ -113,17 +113,17 @@ def online_collection_handler(option: int):
         if option == 0:
             print("back")
         elif option == 1:
-            collection_name = input("Please enter name for the new collection")
+            collection_name = input(":: Please enter name for the new collection => ")
             insert_collection((today, str(collection_name)))
         # open a collection
         elif option == 2:
-            group_id = int(input("enter group_id"))
+            group_id = int(input(":: Enter group_id => "))
             show_music("songs", group_id)
             # print the menu with options for the songs
             song_int = get_input(["0. Back", "1.Play Song", "2.Insert Song", "3.Delete Song"])
             online_song_handler(song_int, group_id)
         elif option == 3:
-            _id = input("Please enter group_id ")
+            _id = input(":: Please enter group_id => ")
             delete_collection(_id)
         print("Online Handler")
         pass
@@ -156,7 +156,7 @@ def get_song_youtube(collection_name):
     try:
         temp = str(path + "/musicplayer/media/" + collection_name)
         os.chdir(temp)
-        url = input("Enter the url of youtube video to add as mp3")
+        url = input(":: Enter the url of youtube video to add as mp3 => ")
         youtube_song = 'youtube-dl -x --embed-thumbnail --audio-format mp3 ' + url
         os.system(youtube_song)
         os.chdir(ROOT_DIR)
@@ -178,7 +178,7 @@ def local_music_handler(option: int, collection_name: str):
         if option == 4:
             get_song_youtube(collection_name)
             return
-        name_song = input("=> Enter the name of the song:: ")
+        name_song = input(":: Enter the name of the song => ")
         temp_song_str = str(path + "/musicplayer/media/" + collection_name + "/" + name_song)
         if name_song in os.listdir(str(path + "/musicplayer/media/" + collection_name)):
             if option == 1:
@@ -187,7 +187,7 @@ def local_music_handler(option: int, collection_name: str):
                 os.remove(temp_song_str)
                 print(name_song + " deleted!")
             elif option == 3:
-                new_song_name = input("enter updated name")
+                new_song_name = input(":: Enter updated name => ")
                 new_song_str = str(path + "/musicplayer/media/" + collection_name + "/" + new_song_name)
                 os.rename(temp_song_str, new_song_str)
         else:
@@ -257,27 +257,25 @@ def offline_collection_delete(collection_name):
         print("Successfully deleted the directory %s " % path)
 
 
-def offline_collection_handler(name: str, *temp_arr, collection_int: int):
+def offline_collection_handler(name, col_int, *temp_arr):
     """
     Handles offline collection requests
     :param name:
     :param temp_arr:
-    :param collection_int:
+    :param col_int:
     :return:
     """
     try:
-        if name in temp_arr:
-            if collection_int == 1:
-                print("collection created")
-                offline_collection_create(name)
-            elif collection_int == 2:
-                offline_collection_open(name)
-                print("opened")
-            elif collection_int == 3:
-                offline_collection_delete(name)
-                print("deleted")
-        else:
-            print("Collection does not exist")
+        if col_int == 1:
+            print("collection created")
+            offline_collection_create(name)
+        elif col_int == 2:
+            offline_collection_open(name)
+            print("opened")
+        elif col_int == 3:
+            offline_collection_delete(name)
+            print("deleted")
+
     except Exception as err:
         print("Error: %s" % err)
 
@@ -302,10 +300,13 @@ def offline_handler():
                 print("back")
                 valid = False
                 continue
-            name = input("=>Enter the name of collection:: ")
+            col_name = input(":: Enter the name of collection => ")
             temp_arr = os.listdir(str('./musicplayer/media/'))
-            if collection_int:
-                offline_collection_handler(name, temp_arr, collection_int)
+            if collection_int > 0:
+                if col_name in temp_arr:
+                    offline_collection_handler(col_name, collection_int)
+                else:
+                    print("Collection does not exist")
     except Exception as err:
         print("Error: %s" % err)
 
